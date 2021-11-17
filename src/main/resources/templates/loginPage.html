@@ -1,0 +1,139 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Login</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+   	<style>
+   		@import url('//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css');
+
+		.audun_warn {
+		    color: #ffffff;
+		    background-color: #FF8080;
+		    font-family: 'Source Sans Pro', sans-serif;
+		    border-radius:.5em;
+		    border: 1px solid;
+		    margin: 10px 0px;
+		    padding:12px;
+		   	width: 400px;
+		   	position: absolute;
+		    top: 30px;
+		    right: 0px;
+		}
+		
+		.audun_info {
+		    color: #ffffff;
+		    background-color: #79CFE0;
+		    font-family: 'Source Sans Pro', sans-serif;
+		    border-radius:.5em;
+		    border: 1px solid;
+		    margin: 10px 0px;
+		    padding:12px;
+		   width: 400px;
+		}
+		
+		.audun_success {
+		    color: #ffffff;
+		    background-color: #7DDF7C;
+		    font-family: 'Source Sans Pro', sans-serif;
+		    border-radius:.5em;
+		    border: 1px solid;
+		    margin: 10px 0px;
+		    padding:12px;
+		   width: 400px;
+		}
+   	</style>
+</head>
+<body>
+<!-- Include _menu.html -->
+<th:block th:include="/_menu"></th:block>
+
+<h1>Login</h1>
+
+<!-- /login?error=true 
+<div th:if="${#request.getParameter('error') == 'true'}"
+     style="color:red;margin:10px 0px;">
+    Login Failed!!!<br />
+    Reason :
+    <span th:if="${#session!= null and #session.getAttribute('SPRING_SECURITY_LAST_EXCEPTION') != null}"
+          th:utext="${#session.getAttribute('SPRING_SECURITY_LAST_EXCEPTION').message}">
+                Static summary
+         </span>
+
+</div>-->
+
+<h3>Enter user name and password:</h3>
+<form name='f' action="" method='POST' id="frm-sign-up">
+    <table>
+        <tr>
+            <td>User:</td>
+            <td><input type='text' name='username' value=''></td>
+            <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+        </tr>
+        <tr>
+            <td>Password:</td>
+            <td><input type='password' name='password' /></td>
+            <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+        </tr>
+        <tr>
+            <td>Remember Me?</td>
+            <td><input type="checkbox" name="remember-me" /></td>
+        </tr>
+
+    </table>
+</form>
+<button class="login-btn" id="btnLogin">Log In</button>
+
+<div class="audun_warn" style="display: none" id="error">
+   <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+  Invalid username and password.
+	<a class="btn-close" style="text-decoration:none; float: right; cursor: pointer;">X</a>
+</div>
+  
+
+<div class="audun_info">
+<i class="fa fa-info-circle" aria-hidden="true"></i>
+  This text box is coded by <a href="http://audunport.tk" style="text-decoration:none;"><font color=#008cba>Audun</A>
+</div>
+
+  
+<div class="audun_success">
+<i class="fa fa-check-circle" aria-hidden="true"></i>
+  This text box is coded by <a href="http://audunport.tk" style="text-decoration:none;"><font color=#008cba> Audun</A>
+</div>
+
+<br>
+
+    <script>
+        //onclick login
+        $("#btnLogin").on("click", function () {
+            let account = {
+                username: $('input[name="username"]').val(),
+                password: $('input[name="password"]').val()
+            }
+            // console.log(account)
+            //
+            $.ajax({
+                type: "POST",
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                url: location.origin + "/api/auth/signin",
+                data: JSON.stringify(account)
+            }).done((data) => {
+                console.log(data);
+                setTimeout(function () {
+                    window.location.href = "/home";
+                }, 1000);
+            }).fail(function () {
+                $("#error").fadeIn("slow");
+            });
+        })
+        
+        $(".btn-close").on("click", function () {
+        	$("#error").fadeOut("slow");
+        });
+    </script>
+</body>
+</html>

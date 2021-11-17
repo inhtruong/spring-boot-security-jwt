@@ -1,0 +1,40 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <title>User Info</title>
+</head>
+<body>
+<!-- Include _menu.html -->
+<th:block th:include="/_menu"></th:block>
+
+
+<!-- <h2>User Info Page</h2>
+<h3>Welcome : <span th:utext="${user.username}"></span></h3>
+<b>This is protected page!</b>
+
+<br/><br/>
+
+<div th:if="${user != null}" th:utext="${user}"></div>  -->
+
+ <h2>Welcome</h2>
+        <p>Spring Security Thymeleaf tutorial</p>
+        <div sec:authorize="hasRole('USER')">Text visible to user.</div>
+        <div sec:authorize="hasRole('MODERATOR')">Text visible to moderator.</div>
+        <div sec:authorize="hasRole('ADMIN')">Text visible to admin.</div>
+        <div sec:authorize="hasRole('STUDENT')">Text visible to student.</div>
+        <div sec:authorize="isAuthenticated()">
+            Text visible only to authenticated users.
+        </div>
+        Authenticated username:
+        <div sec:authentication="name"></div>
+        Authenticated user roles:
+        <div sec:authentication="principal.authorities"></div>
+        
+        <li sec:authorize-url="/admin">
+   			<a id="admin" th:href="@{/admin}">Admin</a>
+   		</li>
+
+
+</body>
+
+</html>
