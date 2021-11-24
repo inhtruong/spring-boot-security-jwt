@@ -55,6 +55,88 @@ public class AuthController {
 
 	@Autowired
 	private JwtUtils jwtUtils;
+	
+//	@PostMapping("/signin")
+//	public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
+//
+//		Authentication authentication = authenticationManager.authenticate(
+//				new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
+//
+//		SecurityContextHolder.getContext().setAuthentication(authentication);
+//		String jwt = jwtUtils.generateJwtToken(authentication);
+//
+//		UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+//		User currentUser = userService.findByUsername(loginRequest.getUsername()).get();
+//		System.out.println(currentUser.getUsername());
+//
+//		JwtResponse jwtResponse =new JwtResponse(
+//				jwt,
+//				currentUser.getId(),
+//				userDetails.getUsername(),
+////				userDetails.getEmail(),
+//				userDetails.getAuthorities()
+//
+//		);
+//		ResponseCookie springCookie = ResponseCookie.from("JWT", jwt)
+//				.httpOnly(false)
+//				.secure(false)
+//				.path("/")
+//				.maxAge(60 * 1000)
+//
+//				.domain("localhost")
+//				.build();
+//		return ResponseEntity
+//				.ok()
+//				.header(HttpHeaders.SET_COOKIE, springCookie.toString())
+//				.body(jwtResponse);
+//
+//	}
+	
+//	@PostMapping("/signup")
+//	public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
+//		if (userService.existsByUsername(signUpRequest.getUsername())) {
+//			return ResponseEntity
+//					.badRequest()
+//					.body(new MessageResponse("Error: Username is already taken!"));
+//		}
+//
+//		if (userService.existsByEmail(signUpRequest.getEmail())) {
+//			return ResponseEntity
+//					.badRequest()
+//					.body(new MessageResponse("Error: Email is already in use!"));
+//		}
+//
+//		// Create new user's account
+//		User user = new User(signUpRequest.getUsername(),
+//							 signUpRequest.getEmail(),
+//							 encoder.encode(signUpRequest.getPassword()));
+//
+//		String strRole = signUpRequest.getRole();
+//
+//		switch (strRole) {
+//			case "admin":
+//				Role adminRole = roleService.findByName(ERole.ROLE_ADMIN)
+//						.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+//				user.setRole(adminRole);
+//
+//				break;
+//			case "mod":
+//				Role modRole = roleService.findByName(ERole.ROLE_MODERATOR)
+//						.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+//				user.setRole(modRole);
+//
+//				break;
+//			default:
+//				Role userRole = roleService.findByName(ERole.ROLE_USER)
+//						.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+//				user.setRole(userRole);
+//		}
+//
+//
+//		userService.save(user);
+//
+//		return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
+//	}
 
 	@PostMapping("/signin")
 	public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {

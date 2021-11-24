@@ -1,8 +1,5 @@
 package com.ait.demospringsecurity.securities.securities.service;
 
-
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -19,14 +16,19 @@ import com.ait.demospringsecurity.repositories.IUserRepository;
 public class UserDetailsServiceImpl implements UserDetailsService {
 	@Autowired
 	IUserRepository userRepository;
-	
+
 	@Autowired
 	IStudentRepository studentRepository;
+
+//	User user = userRepository.findByUsername(username)
+//	.orElseThrow(() -> new UsernameNotFoundException("User Not Found with username: " + username));
+//
+//return UserDetailsImpl.build(user);
 
 	@Override
 	@Transactional
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		
+
 		if (userRepository.findByUsername(username).isPresent()) {
 			User user = userRepository.findByUsername(username)
 					.orElseThrow(() -> new UsernameNotFoundException("User Not Found with username: " + username));
@@ -37,7 +39,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 					.orElseThrow(() -> new UsernameNotFoundException("User Not Found with username: " + username));
 			return StudentDetailsImpl.build(student);
 		}
-		
 
 	}
 
